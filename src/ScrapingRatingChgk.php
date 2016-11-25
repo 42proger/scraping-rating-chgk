@@ -1,4 +1,5 @@
 <?php
+// Парсер данных с сайта рейтинга сообщества знатоков rating.chgk.info
 
 header("Content-Type: text/html; charset=UTF-8");
 error_reporting(E_ERROR | E_PARSE);
@@ -9,6 +10,11 @@ header("Pragma: no-cache");
 
 $remove_urls=true;
 
+/*
+  order=&country=СТРАНА
+  order=&region=РЕГИОН
+  order=&town=ГОРОД 
+*/
 $q = "order=&town=Москва";
 $params=$_SERVER['QUERY_STRING'];
 if(!empty($params)){$q=$params;}
@@ -63,6 +69,7 @@ echo '<table class="rating-mac">';
 echo '<thead>';
 echo '<tr>';
 
+// Заголовки
 $trs= $xpath->query('//table[@id="teams_table"]//thead/tr');
 $i=0;
 foreach ($trs as $tr)
@@ -82,7 +89,7 @@ foreach ($data as $tr) {
 
   $i=0;
   foreach ($tr as $td) {
-
+  // Данные
   if($i==7)
   {
     $td = str_replace('href="/team','target="_blank" href="https://rating.chgk.info/team',$td);
